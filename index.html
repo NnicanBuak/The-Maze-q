@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<script defer src="renderEngine.js"></script>
+		<style>
+			@font-face {
+				font-family: arcade;
+				src: url(arcade-legacy.ttf);
+			}
+			body {
+				background-color: #121212;
+				overflow: hidden;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			#game-container {
+				display: grid;
+				grid-auto-rows: 1fr;
+			}
+
+			#game-container .row {
+				display: flex;
+				flex-direction: row;
+			}
+			#game-container .cell {
+				height: 8;
+				font-size: 2vh;
+
+				color: white;
+				font-family: "arcade", monospace;
+			}
+			#game-container .cell:not(:first-child) {
+				padding-left: 2px;
+			}
+			@media only screen and (width <= 768px) {
+				body {
+					flex-direction: column;
+				}
+			}
+		</style>
+		<link rel="stylesheet" href="reset.css" />
+		<div id="game-container"></div>
+	</body>
+</html>
