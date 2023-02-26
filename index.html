@@ -6,34 +6,50 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body>
-		<script defer src="renderEngine.js"></script>
+		<script defer src="assets/js/renderEngine.js"></script>
+		<script>
+			require("dotenv").config();
+			const mapTiles = process.env
+		</script>
+		<script src="assets/js/mapMessages.js"></script>
 		<style>
 			@font-face {
 				font-family: arcade;
-				src: url(arcade-legacy.ttf);
+				src: url(assets/ArcadeLegacy.ttf);
 			}
 			body {
 				background-color: #121212;
 				overflow: hidden;
+			}
+			#content {
+				font-family: "arcade", monospace;
+				width: 100vw;
+				height: 100vh;
 				display: flex;
-				justify-content: center;
-				align-items: center;
+				gap: 100px;
+				padding: 3em;
+			}
+			#game-menu {
+				font-size: small;
+				width: 100%;
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				color: white;
 			}
 			#game-container {
 				display: grid;
 				grid-auto-rows: 1fr;
 			}
-
 			#game-container .row {
 				display: flex;
 				flex-direction: row;
 			}
 			#game-container .cell {
-				height: 8;
+				height: 11.6px;
 				font-size: 2vh;
 
 				color: white;
-				font-family: "arcade", monospace;
 			}
 			#game-container .cell:not(:first-child) {
 				padding-left: 2px;
@@ -44,7 +60,10 @@
 				}
 			}
 		</style>
-		<link rel="stylesheet" href="reset.css" />
-		<div id="game-container"></div>
+		<link rel="stylesheet" href="assets/css/reset.css" />
+		<div id="content">
+			<div id="game-container"></div>
+			<div id="game-menu">TEST</div>
+		</div>
 	</body>
 </html>

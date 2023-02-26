@@ -1,0 +1,6 @@
+*.afm
+*.sfd
+.env
+
+.svg
+arcade-legacy-og.ttf
