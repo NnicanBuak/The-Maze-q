@@ -1,4 +1,4 @@
-# .env
+# Mltiplayer maze
 
 ## mapTiles
 
