@@ -1,0 +1,15 @@
+# .env
+
+## mapTiles
+
+<code>
+FILL=9632 #■
+SPACE=8199 # 
+PLAYER=64 #@
+EXIT=69 #E
+SPIKES=9651 #△
+COIN=169 #©
+SMALLSHADE=9617 #░
+MEDIUMSAHADE=9618 #▒
+LARGESHADE=9619 #▓
+</code>
