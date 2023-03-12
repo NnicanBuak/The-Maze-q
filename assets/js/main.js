@@ -10,7 +10,7 @@ export let name;
 if (localStorage.getItem("uuid") && localStorage.getItem("name")) {
 	uuid = localStorage.getItem("uuid");
 	name = localStorage.getItem("name");
-	if (!confirm(`Use the name ${name}?`)) {
+	if (!confirm(`You ${name}?`)) {
 		name = prompt("Enter your name: (case insensitive)");
 		if (name) name = name.toUpperCase();
 		else name = "JOE";
@@ -33,7 +33,7 @@ if (localStorage.getItem("uuid") && localStorage.getItem("name")) {
 	localStorage.setItem("uuid", uuid);
 }
 
-document.getElementById("name").innerText = name;
+document.getElementById("name").innerText = `NAME: ${name}`;
 
 // ---
 
