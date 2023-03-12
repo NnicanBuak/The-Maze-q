@@ -15,6 +15,7 @@ As you progress through the maze, you'll collect valuable items and power-ups th
 "The Maze" is a game of skill, strategy, and adventure, where every decision you make could mean the difference between success and failure. Will you have what it takes to conquer the maze and emerge victorious? Only time will tell.
 
 > I'm going to make the game multiplayer, to introduce the surprise factor and if the player does meet another player, he can write something in chat, but any message will turn into incomprehensible characters, this and other design solutions should help immerse the player in the world so that he did not expect to see on the map similar player and he will long doubt whether it is a real player or not.
+I also want to create an eerie ambiance, since the levels resemble the Backrooms.
 
 ## Map Tiles
 
