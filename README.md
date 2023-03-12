@@ -1,6 +1,6 @@
-# Multiplayer maze
+# (Multiplayer) maze
 
-## mapTiles
+## Map Tiles
 
 - LEFTBORDER: String.fromCharCode(9612), //▌
 - RIGHTBORDER: String.fromCharCode(9616), //▐
