@@ -2,31 +2,35 @@ import { drawnMatrixMessage } from "./matrixMessageWriter.js";
 import { name, uuid } from "./main.js";
 
 export function updateRender(container, map = drawnMatrixMessage("error")) {
+	let viewport;
 	const playerCoords = findPlayerCoordinates(map);
 	if (playerCoords) {
 		const { centerRow, centerCol } = playerCoords;
 
-		// задаем размеры новой матрицы
-		const rows = 31;
-		const columns = 41;
+		// set sizes for new matrix
+		const rowCount = 31;
+		const columnCount = 41;
 
-		// вычисляем границы матрицы
-		const top = Math.max(centerRow - rows / 2, 0);
-		const left = Math.max(centerCol - columns / 2, 0);
-		const bottom = Math.min(top + rows, map.length);
-		const right = Math.min(left + columns, map[0].length);
+		// calculate matrix boundaries
+		const top = Math.max(centerRow - rowCount / 2, 0);
+		const left = Math.max(centerCol - columnCount / 2, 0);
+		const bottom = Math.min(top + rowCount, map.length - 1);
+		const right = Math.min(left + columnCount, map[0].length - 1);
 
-		// создаем новую матрицу и копируем нужные элементы из старой матрицы
-		const viewport = [];
-		for (let row = top; row < bottom; row++) {
+		// create new matrix and copy required elements from old matrix
+		viewport = [];
+		for (let row = top; row <= bottom; row++) {
 			const newRow = [];
-			for (let col = left; col < right; col++) {
+			for (let col = left; col <= right; col++) {
 				newRow.push(map[row][col]);
 			}
 			viewport.push(newRow);
 		}
 		console.log(viewport);
-	} else viewport = map;
+	} else {
+		viewport = map;
+	}
+
 	container.innerHTML = ""; // Clear previous content
 	borderedMatrix(viewport).forEach((row) => {
 		const rowElem = document.createElement("div");
