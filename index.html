@@ -6,19 +6,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body>
-		<script defer src="assets/js/renderEngine.js"></script>
-		<script>
-			require("dotenv").config();
-			const mapTiles = process.env
-		</script>
-		<script src="assets/js/mapMessages.js"></script>
+		<script type="module" defer src="assets/js/main.js"></script>
+		<script type="module" async src="assets/js/matrixMessageWriter.js"></script>
+		<script type="module" async src="assets/js/renderEngine.js"></script>
+		<script src="assets/js/mapTiles.js"></script>
 		<style>
 			@font-face {
 				font-family: arcade;
 				src: url(assets/ArcadeLegacy.ttf);
 			}
 			body {
-				background-color: #121212;
+				background-color: #000;
 				overflow: hidden;
 			}
 			#content {
@@ -49,7 +47,7 @@
 				height: 11.6px;
 				font-size: 2vh;
 
-				color: white;
+				color: lightgray;
 			}
 			#game-container .cell:not(:first-child) {
 				padding-left: 2px;
@@ -63,7 +61,7 @@
 		<link rel="stylesheet" href="assets/css/reset.css" />
 		<div id="content">
 			<div id="game-container"></div>
-			<div id="game-menu">TEST</div>
+			<div id="game-menu"><h1 id="name"></h1></div>
 		</div>
 	</body>
 </html>

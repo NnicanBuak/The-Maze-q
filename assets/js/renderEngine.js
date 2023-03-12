@@ -1,41 +1,71 @@
-const container = document.getElementById("game-container");
-let map = Array(30).fill(Array(40).fill("■"));
+import { drawnMatrixMessage } from "./matrixMessageWriter.js";
+import { name, uuid } from "./main.js";
 
-updateRender(map);
+export function updateRender(container, map = drawnMatrixMessage("error")) {
+	const playerCoords = findPlayerCoordinates(map);
+	if (playerCoords) {
+		const { centerRow, centerCol } = playerCoords;
 
-function updateRender(map = drawnMapMessage("error")) {
-	// Очистка контейнера
-	container.innerHTML = "";
+		// задаем размеры новой матрицы
+		const rows = 31;
+		const columns = 41;
 
-	// Заполнение контейнера
-	borderedMatrix(map).forEach((row) => {
+		// вычисляем границы матрицы
+		const top = Math.max(centerRow - rows / 2, 0);
+		const left = Math.max(centerCol - columns / 2, 0);
+		const bottom = Math.min(top + rows, map.length);
+		const right = Math.min(left + columns, map[0].length);
+
+		// создаем новую матрицу и копируем нужные элементы из старой матрицы
+		const viewport = [];
+		for (let row = top; row < bottom; row++) {
+			const newRow = [];
+			for (let col = left; col < right; col++) {
+				newRow.push(map[row][col]);
+			}
+			viewport.push(newRow);
+		}
+		console.log(viewport);
+	} else viewport = map;
+	container.innerHTML = ""; // Clear previous content
+	borderedMatrix(viewport).forEach((row) => {
 		const rowElem = document.createElement("div");
 		rowElem.classList.add("row");
 		row.forEach((cell) => {
 			const cellElem = document.createElement("span");
 			cellElem.classList.add("cell");
-			cellElem.textContent = cell;
+			cellElem.textContent = cell[0];
 			rowElem.appendChild(cellElem);
 		});
 		container.appendChild(rowElem);
 	});
-}
 
-function borderedMatrix(matrix) {
-	// Добавляем рамку
-	const width = matrix[0].length;
-	const height = matrix.length;
-	const newMatrix = [];
-
-	// Вертикальные линии и символы матрицы
-	for (let i = 0; i < height; i++) {
-		const row = [];
-		row.push(String.fromCharCode(9612));
-		for (let j = 0; j < width; j++) {
-			row.push(matrix[i][j]);
+	function findPlayerCoordinates(matrix) {
+		for (let i = 0; i < matrix.length; i++) {
+			for (let j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j].includes(`${name};${uuid};`)) {
+					return { j, i };
+				}
+			}
 		}
-		row.push(String.fromCharCode(9616));
-		newMatrix.push(row);
+		console.log("Player not found on map");
+		return null;
+	}
+
+	function borderedMatrix(matrix) {
+		const width = matrix[0].length;
+		const height = matrix.length;
+		let newMatrix = [];
+
+		for (let i = 0; i < height; i++) {
+			const row = [];
+			row.push(String.fromCharCode(9612));
+			for (let j = 0; j < width; j++) {
+				row.push(matrix[i][j]);
+			}
+			row.push(String.fromCharCode(9616));
+			newMatrix.push(row);
+		}
 	}
 
 	return newMatrix;

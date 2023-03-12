@@ -1,4 +1,4 @@
-function drawnMapMessage(message) {
+export function drawnMatrixMessage(message) {
 	const matrix = Array(30)
 		.fill()
 		.map(() => Array(40).fill("#"));
