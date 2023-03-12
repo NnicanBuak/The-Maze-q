@@ -20,7 +20,8 @@ if (localStorage.getItem("uuid") && localStorage.getItem("name")) {
 		return v.toString(16);
 	});
 
-	name = prompt("Enter your name: (case insensitive)").toUpperCase();
+	name = prompt("Enter your name: (case insensitive)");
+	if (name) name = name.toUpperCase(); else name = "JOE"
 
 	//Save values to local storage
 	localStorage.setItem("name", name);
