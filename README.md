@@ -1,5 +1,7 @@
 # (Multiplayer) maze
 
+> # ***Warning! The current version of the game loads the CPU too much, please do not leave the tab with the site open, it leads to performance leak.***
+
 ## Map Tiles
 
 - LEFTBORDER: String.fromCharCode(9612), //▌
