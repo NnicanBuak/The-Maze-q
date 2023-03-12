@@ -2,5 +2,5 @@
 *.sfd
 .env
 
-.svg
+*.svg
 arcade-legacy-og.ttf
