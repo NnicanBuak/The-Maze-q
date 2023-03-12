@@ -2,8 +2,10 @@
 
 ## mapTiles
 
+- LEFTBORDER: String.fromCharCode(9612), //▌
+- RIGHTBORDER: String.fromCharCode(9616), //▐
 - FILL=9632 #■
-- SPACE=8199 # 
+- SPACE=8199 #
 - PLAYER=64 #@
 - EXIT=69 #E
 - SPIKES=9651 #△
