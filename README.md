@@ -1,4 +1,4 @@
-# Mltiplayer maze
+# Multiplayer maze
 
 ## mapTiles
 
