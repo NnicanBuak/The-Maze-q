@@ -1,4 +1,6 @@
 const mapTiles = {
+	LEFTBORDER: String.fromCharCode(9612),
+	RIGHTBORDER: String.fromCharCode(9616),
 	FILL: String.fromCharCode(9632), //■
 	SPACE: String.fromCharCode(8199), //
 	PLAYER: String.fromCharCode(64), //@

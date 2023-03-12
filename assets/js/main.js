@@ -1,6 +1,8 @@
 import { updateRender } from "./renderEngine.js";
 
 const container = document.getElementById("game-container");
+const viewportWidth = 51;
+const viewportHeight = 27;
 
 export let uuid;
 export let name;
@@ -9,7 +11,9 @@ if (localStorage.getItem("uuid") && localStorage.getItem("name")) {
 	uuid = localStorage.getItem("uuid");
 	name = localStorage.getItem("name");
 	if (!confirm(`Use the name ${name}?`)) {
-		name = prompt("Enter your name: (case insensitive)").toUpperCase();
+		name = prompt("Enter your name: (case insensitive)");
+		if (name) name = name.toUpperCase();
+		else name = "JOE";
 		localStorage.setItem("name", name);
 	}
 } else {
@@ -21,17 +25,20 @@ if (localStorage.getItem("uuid") && localStorage.getItem("name")) {
 	});
 
 	name = prompt("Enter your name: (case insensitive)");
-	if (name) name = name.toUpperCase(); else name = "JOE"
+	if (name) name = name.toUpperCase();
+	else name = "JOE";
 
 	//Save values to local storage
 	localStorage.setItem("name", name);
 	localStorage.setItem("uuid", uuid);
 }
 
+document.getElementById("name").innerText = name;
+
+// ---
+
 // Получение карты
-let map = Array.from({ length: 50 }, () =>
-	Array(50).fill(...mapTiles["SPACE"])
-);
+let map = Array.from({ length: 50 }, () => Array(100).fill(mapTiles["SPACE"]));
 
 // Спавн персонажа
 function spawnCharacter(name, uuid, coordinates) {
@@ -42,6 +49,5 @@ function spawnCharacter(name, uuid, coordinates) {
 	}
 }
 spawnCharacter(name, uuid, { x: 25, y: 25 });
-console.log(map);
 
-updateRender(container, map);
+updateRender(container, map, viewportWidth, viewportHeight);

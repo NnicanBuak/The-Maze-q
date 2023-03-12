@@ -1,35 +1,12 @@
-import { drawnMatrixMessage } from "./matrixMessageWriter.js";
 import { name, uuid } from "./main.js";
 
-export function updateRender(container, map = drawnMatrixMessage("error")) {
-	let viewport;
-	const playerCoords = findPlayerCoordinates(map);
-	if (playerCoords) {
-		const { centerRow, centerCol } = playerCoords;
+export function updateRender(container, matrix, width, height) {
+	const playerCoords = findPlayerCoordinates(matrix);
 
-		// set sizes for new matrix
-		const rowCount = 31;
-		const columnCount = 41;
-
-		// calculate matrix boundaries
-		const top = Math.max(centerRow - rowCount / 2, 0);
-		const left = Math.max(centerCol - columnCount / 2, 0);
-		const bottom = Math.min(top + rowCount, map.length - 1);
-		const right = Math.min(left + columnCount, map[0].length - 1);
-
-		// create new matrix and copy required elements from old matrix
-		viewport = [];
-		for (let row = top; row <= bottom; row++) {
-			const newRow = [];
-			for (let col = left; col <= right; col++) {
-				newRow.push(map[row][col]);
-			}
-			viewport.push(newRow);
-		}
-		console.log(viewport);
-	} else {
-		viewport = map;
-	}
+	let viewport = playerCoords
+		? cutMatrix(matrix, playerCoords, width, height)
+		: drawnMatrixMessage("error", width, height);
+	console.log(viewport);
 
 	container.innerHTML = ""; // Clear previous content
 	borderedMatrix(viewport).forEach((row) => {
@@ -48,12 +25,43 @@ export function updateRender(container, map = drawnMatrixMessage("error")) {
 		for (let i = 0; i < matrix.length; i++) {
 			for (let j = 0; j < matrix[i].length; j++) {
 				if (matrix[i][j].includes(`${name};${uuid};`)) {
-					return { j, i };
+					return { x: j, y: i };
 				}
 			}
 		}
 		console.log("Player not found on map");
 		return null;
+	}
+
+	function cutMatrix(matrix, { x: anchorX, y: anchorY }, width, height) {
+		const MATRIX_HEIGHT = matrix.length;
+		const MATRIX_WIDTH = matrix[0].length;
+
+		if (
+			anchorX < 0 ||
+			anchorY < 0 ||
+			anchorX >= MATRIX_WIDTH ||
+			anchorY >= MATRIX_HEIGHT ||
+			width <= 0 ||
+			height <= 0 ||
+			width > MATRIX_WIDTH ||
+			height > MATRIX_HEIGHT
+		) {
+			return drawnMatrixMessage("error", width, height);
+		}
+
+		const top = Math.round(Math.max(anchorY - height / 2, 0));
+		const left = Math.round(Math.max(anchorX - width / 2, 0));
+		const bottom = Math.round(Math.min(top + height, MATRIX_HEIGHT));
+		const right = Math.round(Math.min(left + width, MATRIX_WIDTH));
+
+		const newMatrix = [];
+
+		for (let row = top; row < bottom; row++) {
+			newMatrix.push(matrix[row].slice(left, right));
+		}
+
+		return newMatrix;
 	}
 
 	function borderedMatrix(matrix) {
@@ -63,14 +71,61 @@ export function updateRender(container, map = drawnMatrixMessage("error")) {
 
 		for (let i = 0; i < height; i++) {
 			const row = [];
-			row.push(String.fromCharCode(9612));
+			row.push(mapTiles["LEFTBORDER"]);
 			for (let j = 0; j < width; j++) {
 				row.push(matrix[i][j]);
 			}
-			row.push(String.fromCharCode(9616));
+			row.push(mapTiles["RIGHTBORDER"]);
 			newMatrix.push(row);
 		}
+		return newMatrix;
 	}
 
-	return newMatrix;
+	function drawnMatrixMessage(message, width, height) {
+		let matrix = Array.from({ length: height }, () =>
+			Array(width).fill(mapTiles["FILL"])
+		);
+
+		const letterWidth = 4;
+		const letterHeight = 5;
+		const letterSpacing = 1;
+
+		let messageLetters;
+		switch (message) {
+			case "error":
+				messageLetters = [letters["E"], letters["R"], letters["O"]];
+				break;
+
+			default:
+				return matrix;
+		}
+
+		const matrixWidth =
+			message.length * (letterWidth + letterSpacing) - letterSpacing;
+		const matrixHeight = letterHeight;
+
+		const messageMatrix = Array.from({ length: matrixHeight }, () =>
+			Array(matrixWidth).fill(mapTiles["SPACE"])
+		);
+
+		const drawLetter = (letter, offsetX) => {
+			const coordinates = messageLetters[letter];
+			coordinates.forEach(([dx, dy]) => {
+				messageMatrix[dx][offsetX + dy] = " ";
+			});
+		};
+
+		let offsetX = Math.floor(
+			(matrixWidth -
+				message.length * letterWidth -
+				(message.length - 1) * letterSpacing) /
+				2
+		);
+		for (let i = 0; i < message.length; i++) {
+			drawLetter(message[i], offsetX);
+			offsetX += letterWidth + letterSpacing;
+		}
+
+		return matrix;
+	}
 }
