@@ -1,5 +1,7 @@
 # The Maze?
 
+## **[[TEST GAME]](https://nnicanbuak.github.io/The-Maze-q/)**
+
 > # ***Warning! The current version of the game can put too much strain on the processor, please do not leave the tab with the site open, it leads to performance leaks.***
 
 ## Description
