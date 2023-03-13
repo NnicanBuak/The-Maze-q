@@ -1,11 +1,27 @@
-let menuButtons = Array.from(document.querySelectorAll("#game-menu button"));
+let menuButtons = Array.from(
+	document.querySelectorAll("#game-menu button, #game-menu input")
+);
 let focusedButtonIndex = 0;
+
+menuButtons.filter((button) => button.style.display !== "none");
 
 menuButtons[focusedButtonIndex].focus();
 
-document.addEventListener("keydown", (event) => {
+window.addEventListener("keydown", (event) => {
 	const key = event.key;
-
+	if (key === "ArrowRight" || key === "Enter") {
+		if (menuButtons[focusedButtonIndex].value === "settings") {
+			const settingsContent = document.querySelector("#settings-content");
+			const displayContent = document.querySelector("#display-content");
+			if (settingsContent.style.display === "none") {
+				displayContent.style.display = "none";
+				settingsContent.style.display = "block";
+			} else {
+				displayContent.style.display = "block";
+				settingsContent.style.display = "none";
+			}
+		}
+	}
 	if (key === "ArrowUp") {
 		focusedButtonIndex =
 			focusedButtonIndex === 0

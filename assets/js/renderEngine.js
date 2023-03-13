@@ -6,7 +6,6 @@ export function updateRender(container, matrix, width, height) {
 	let viewport = playerCoords
 		? cutMatrix(matrix, playerCoords, width, height)
 		: drawnMatrixMessage("error", width, height);
-	console.log(viewport);
 
 	container.innerHTML = ""; // Clear previous content
 	borderedMatrix(viewport).forEach((row) => {

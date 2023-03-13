@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<script type="module" defer src="assets/js/main.js"></script>
-		<script type="module" async src="assets/js/matrixMessageWriter.js"></script>
+		<script type="module" async src="assets/js/inputManager.js"></script>
 		<script type="module" async src="assets/js/renderEngine.js"></script>
 		<script src="assets/js/config.js"></script>
 
@@ -21,13 +21,18 @@
 				overflow: hidden;
 				cursor: none;
 			}
-			button {
+			input[type="checkbox"] {
+				display: none;
+			}
+			button,
+			input[type="checkbox"]::after {
 				cursor: none;
 				width: 100%;
 				background-color: transparent;
 				color: #fff;
 			}
-			button:focus-visible {
+			button:focus-visible,
+			input[type="checkbox"]::after:focus-visible {
 				outline: none;
 				background-color: #fff;
 				color: #000;
@@ -86,9 +91,33 @@
 		<div id="content">
 			<div id="game-container"></div>
 			<div id="game-menu">
-				<div id="menu-content"><h1 id="name"></h1></div>
+				<div id="display-content"><h1 id="name"></h1></div>
+				<div id="settings-content">
+					<div class="button">
+						<input
+							class="button"
+							type="checkbox"
+							value="crt-effect"
+							id="crt-effect-settings"
+							tabindex="-1"
+						/>
+						<label for="crt-effect"></label>
+					</div>
+					<div class="button">
+						<input
+							class="button"
+							type="number"
+							value="music"
+							id="music-settings"
+							tabindex="-1"
+						/>
+						<label for="music-settings"></label>
+					</div>
+				</div>
 				<div id="buttons">
-					<button id="settings" tabindex="-1">[SETTINGS]</button>
+					<button class="button" value="settings" tabindex="-1">
+						[SETTINGS]
+					</button>
 				</div>
 			</div>
 		</div>
